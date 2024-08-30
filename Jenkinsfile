@@ -12,11 +12,10 @@ pipeline {
                 echo 'Run unit tests using a framework like JUnit or TestNG, and integration tests to ensure the different components work together.'
             }
             post {
-                always {
+                sucess {
                     mail to: 'hesh.zsg@gmail.com',
-                        subject: "Unit and Integration Tests: ${currentBuild.currentResult}",
-                        body: "The Unit and Integration Tests stage has completed. Check the attached logs for details.",
-                        attachLog: true
+                    subject: "Unit and Integration Tests",
+                    body: "The Unit and Integration Tests stage has successfully completed.",
                 }
             }
         }
@@ -30,11 +29,10 @@ pipeline {
                 echo 'Perform a security scan using a tool like OWASP ZAP or Snyk to identify any vulnerabilities.'
             }
             post {
-                always {
+                sucess {
                     mail to: 'hesh.zsg@gmail.com',
-                        subject: "Security Scan: ${currentBuild.currentResult}",
-                        body: "The Security Scan stage has completed. Check the attached logs for details.",
-                        attachLog: true
+                    subject: "Security Scan",
+                    body: "The Security Scan stage has successfully completed.",
                 }
             }
         }
@@ -48,11 +46,10 @@ pipeline {
                 echo 'Run integration tests on the staging environment to ensure the application functions as expected in a production-like environment.'
             }
             post {
-                always {
+                sucess {
                     mail to: 'hesh.zsg@gmail.com',
-                        subject: "Integration Tests on Staging: ${currentBuild.currentResult}",
-                        body: "The Integration Tests on Staging has completed. Check the attached logs for details.",
-                        attachLog: true
+                    subject: "Integration Tests on Staging",
+                    body: "The Integration Tests on Staging has successfully completed.",
                 }
             }
         }
