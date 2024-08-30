@@ -12,7 +12,7 @@ pipeline {
                 echo 'Run unit tests using a framework like JUnit or TestNG, and integration tests to ensure the different components work together.'
             }
             post {
-                sucess {
+                success {
                     mail to: 'hesh.zsg@gmail.com',
                     subject: "Unit and Integration Tests",
                     body: "The Unit and Integration Tests stage has successfully completed."
@@ -29,7 +29,7 @@ pipeline {
                 echo 'Perform a security scan using a tool like OWASP ZAP or Snyk to identify any vulnerabilities.'
             }
             post {
-                sucess {
+                success {
                     mail to: 'hesh.zsg@gmail.com',
                     subject: "Security Scan",
                     body: "The Security Scan stage has successfully completed."
@@ -46,7 +46,7 @@ pipeline {
                 echo 'Run integration tests on the staging environment to ensure the application functions as expected in a production-like environment.'
             }
             post {
-                sucess {
+                success {
                     mail to: 'hesh.zsg@gmail.com',
                     subject: "Integration Tests on Staging",
                     body: "The Integration Tests on Staging has successfully completed."
