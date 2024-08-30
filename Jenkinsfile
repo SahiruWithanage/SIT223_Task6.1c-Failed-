@@ -15,7 +15,7 @@ pipeline {
                 success {
                     mail to: 'hesh.zsg@gmail.com',
                     subject: "Unit and Integration Tests",
-                    body: "The Unit and Integration Tests stage has successfully completed."
+                    body: "The Unit and Integration Tests stage has successfully completed. Change test"
                 }
             }
         }
