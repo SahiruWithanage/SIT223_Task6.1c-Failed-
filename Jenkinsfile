@@ -1,54 +1,63 @@
 pipeline {
     agent any
 
-    environment {
-        LOG_FILE = 'pipeline.log'
-    }
-
     stages {
         stage('Build') {
             steps {
-                script {
-                    sh 'echo "Starting Build Stage" | tee -a $LOG_FILE'
-                    sh 'echo "Building the code..." | tee -a $LOG_FILE'
-                }
+                echo 'Build the code using a build automation tool like Maven or Gradle to compile and package your code.'
             }
         }
         stage('Unit and Integration Tests') {
             steps {
-                script {
-                    sh 'echo "Starting Unit and Integration Tests Stage" | tee -a $LOG_FILE'
-                    sh 'echo "Running unit and integration tests..." | tee -a $LOG_FILE'
-                }
+                echo 'Run unit tests using a framework like JUnit or TestNG, and integration tests to ensure the different components work together.'
             }
             post {
-                always {
-                    script {
-                        // Ensure the log file is available before sending email
-                        archiveArtifacts artifacts: '$LOG_FILE', allowEmptyArchive: true
-
-                        // Retry sending email if it fails
-                        try {
-                            emailext(
-                                to: 'hesh.zsg@gmail.com',
-                                subject: "Unit and Integration Tests - ${currentBuild.currentResult}",
-                                body: "The Unit and Integration Tests stage has ${currentBuild.currentResult}. Please find the attached logs.",
-                                attachmentsPattern: '$LOG_FILE'
-                            )
-                        } catch (Exception e) {
-                            echo "Email sending failed: ${e.message}. Retrying..."
-                            sleep 10
-                            emailext(
-                                to: 'hesh.zsg@gmail.com',
-                                subject: "Retry: Unit and Integration Tests - ${currentBuild.currentResult}",
-                                body: "Retrying to send logs after failure. The Unit and Integration Tests stage has ${currentBuild.currentResult}. Please find the attached logs.",
-                                attachmentsPattern: '$LOG_FILE'
-                            )
-                        }
-                    }
+                success {
+                    emailext attachLog: true, body: 'The Unit and Integration Tests stage has ${currentBuild.result}.', subject: 'Unit and Integration Tests - ${currentBuild.result}', to: 'hush.zsg@gmail.com'
+                }
+                failure {
+                    emailext attachLog: true, body: 'The Unit and Integration Tests stage has ${currentBuild.result}.', subject: 'Unit and Integration Tests - ${currentBuild.result}', to: 'hush.zsg@gmail.com'
                 }
             }
         }
-        // Add more stages here as needed
+        stage('Code Analysis') {
+            steps {
+                echo 'Analyze the code using a tool like SonarQube to ensure it meets industry standards.'
+            }
+        }
+        stage('Security Scan') {
+            steps {
+                echo 'Perform a security scan using a tool like OWASP ZAP or Snyk to identify any vulnerabilities.'
+            }
+            post {
+                success {
+                    mail to: 'hesh.zsg@gmail.com',
+                    subject: "Security Scan",
+                    body: "The Security Scan stage has successfully completed."
+                }
+            }
+        }
+        stage('Deploy to Staging') {
+            steps {
+                echo 'Deploy the application to a staging server, such as an AWS EC2 instance.'
+            }
+        }
+        stage('Integration Tests on Staging') {
+            steps {
+                echo 'Run integration tests on the staging environment using tools like Apache JMeter or Eggplant to ensure the application functions as expected in a production-like environment.'
+            }
+            post {
+                success {
+                    mail to: 'hesh.zsg@gmail.com',
+                    subject: "Integration Tests on Staging",
+                    body: "The Integration Tests on Staging has successfully completed."
+                }
+            }
+        }
+        stage('Deploy to Production') {
+            steps {
+                echo 'Deploy the application to a production server, such as an AWS EC2 instance.'
+            }
+        }
     }
 }
