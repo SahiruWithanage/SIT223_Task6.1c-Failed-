@@ -12,13 +12,19 @@ pipeline {
                 echo 'Run unit tests using a framework like JUnit or TestNG, and integration tests to ensure the different components work together.'
             }
             post {
-                success {
-                    emailext attachLog: true, body: 'The Unit and Integration Tests stage has ${currentBuild.result}.', subject: 'Unit and Integration Tests - ${currentBuild.result}', to: 'hesh.zsg@gmail.com'
-                }
-                failure {
-                    emailext attachLog: true, body: 'The Unit and Integration Tests stage has ${currentBuild.result}.', subject: 'Unit and Integration Tests - ${currentBuild.result}', to: 'hesh.zsg@gmail.com'
-                }
-            }
+            always {
+                    archiveArtifacts artifacts: 'generatedFile.txt', onlyIfSuccessful: true
+            
+                    echo 'I will always say Hello again!'
+                
+                    emailext attachLog: true, attachmentsPattern: 'generatedFile.txt',
+                        body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n More info at: ${env.BUILD_URL}",
+                        
+                        subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}",
+                        to: 'hesh.zsg@gmail.com'
+            
+        }
+    }
         }
         stage('Code Analysis') {
             steps {
