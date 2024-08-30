@@ -13,13 +13,13 @@ lpipeline {
             }
             post {
                 always{
-                        emailext  
+                        emailext  (
                         
                         
                         attachLog: true,
                     body: "The Security Scan stage has successfully completed.",
                         subject: "Security Scan",
-                    to: 'hesh.zsg@gmail.com'
+                    to: 'hesh.zsg@gmail.com')
                 }
             }
         }
