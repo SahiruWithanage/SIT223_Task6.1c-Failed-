@@ -13,16 +13,20 @@ pipeline {
             }
             post {
                 success {
-                    mail to: 'hesh.zsg@gmail.com',
+                    emailext (
+                    to: 'hesh.zsg@gmail.com',
                     subject: "Unit and Integration Tests - ${currentBuild.result}",
                     body: "The Unit and Integration Tests stage has ${currentBuild.result}.",
                     attachmentsPattern: '**/*.log'
+                    )
                 }
                 failure {
-                    mail to: 'hesh.zsg@gmail.com',
+                    emailext (
+                    to: 'hesh.zsg@gmail.com',
                     subject: "Unit and Integration Tests - ${currentBuild.result}",
                     body: "The Unit and Integration Tests stage has ${currentBuild.result}.",
                     attachmentsPattern: '**/*.log'
+                    )
                 }
             }
         }
