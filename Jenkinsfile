@@ -13,10 +13,10 @@ pipeline {
             }
             post {
                 success {
-                    emailext attachLog: true, body: 'The Unit and Integration Tests stage has ${currentBuild.result}.', subject: 'Unit and Integration Tests - ${currentBuild.result}', to: 'hush.zsg@gmail.com'
+                    emailext attachLog: true, body: 'The Unit and Integration Tests stage has ${currentBuild.result}.', subject: 'Unit and Integration Tests - ${currentBuild.result}', to: 'hesh.zsg@gmail.com'
                 }
                 failure {
-                    emailext attachLog: true, body: 'The Unit and Integration Tests stage has ${currentBuild.result}.', subject: 'Unit and Integration Tests - ${currentBuild.result}', to: 'hush.zsg@gmail.com'
+                    emailext attachLog: true, body: 'The Unit and Integration Tests stage has ${currentBuild.result}.', subject: 'Unit and Integration Tests - ${currentBuild.result}', to: 'hesh.zsg@gmail.com'
                 }
             }
         }
