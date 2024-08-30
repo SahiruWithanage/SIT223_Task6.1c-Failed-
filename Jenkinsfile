@@ -1,4 +1,4 @@
-pipeline {
+lpipeline {
     agent any
 
     stages {
@@ -13,10 +13,13 @@ pipeline {
             }
             post {
                 success {
-                        mail to: 'hesh.zsg@gmail.com',
+                        emailext  
+                        
+                        
+                        attachLog: true,
+                    body: "The Security Scan stage has successfully completed.",
                         subject: "Security Scan",
-                        body: "The Security Scan stage has successfully completed.",
-                        attachLog: true
+                    to: 'hesh.zsg@gmail.com'
                 }
             }
         }
