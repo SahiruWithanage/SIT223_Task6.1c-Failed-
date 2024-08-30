@@ -13,16 +13,24 @@ pipeline {
             }
             post {
                 success {
-                    mail to: 'hesh.zsg@gmail.com',
-                         subject: "Unit and Integration Tests - ${currentBuild.result}",
-                         body: "The Unit and Integration Tests stage has ${currentBuild.result}.",
-                         attachmentsPattern: '**/*.log'
+                    script {
+                        def logFiles = findFiles(glob: '**/*.log')
+                        def attachments = logFiles.collect { it.path }.join(',')
+                        mail to: 'hesh.zsg@gmail.com',
+                             subject: "Unit and Integration Tests - ${currentBuild.result}",
+                             body: "The Unit and Integration Tests stage has ${currentBuild.result}. Please find the attached logs.",
+                             attachments: attachments
+                    }
                 }
                 failure {
-                    mail to: 'hesh.zsg@gmail.com',
-                         subject: "Unit and Integration Tests - ${currentBuild.result}",
-                         body: "The Unit and Integration Tests stage has ${currentBuild.result}.",
-                         attachmentsPattern: '**/*.log'
+                    script {
+                        def logFiles = findFiles(glob: '**/*.log')
+                        def attachments = logFiles.collect { it.path }.join(',')
+                        mail to: 'hesh.zsg@gmail.com',
+                             subject: "Unit and Integration Tests - ${currentBuild.result}",
+                             body: "The Unit and Integration Tests stage has ${currentBuild.result}. Please find the attached logs.",
+                             attachments: attachments
+                    }
                 }
             }
         }
