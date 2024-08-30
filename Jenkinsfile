@@ -12,10 +12,13 @@ pipeline {
                 echo 'Run unit tests using a framework like JUnit or TestNG, and integration tests to ensure the different components work together.'
             }
             post {
-                success {
-                    mail to: 'hesh.zsg@gmail.com',
-                    subject: "Unit and Integration Tests",
-                    body: "The Unit and Integration Tests stage has successfully completed."
+                always {
+                    emailext (
+                        attachLog: true,
+                        body: "The Unit and Integration Tests stage has completed.",
+                        subject: "Unit and Integration Tests",
+                        to: 'hesh.zsg@gmail.com'
+                    )
                 }
             }
         }
@@ -30,9 +33,12 @@ pipeline {
             }
             post {
                 success {
-                    mail to: 'hesh.zsg@gmail.com',
-                    subject: "Security Scan",
-                    body: "The Security Scan stage has successfully completed."
+                    emailext (
+                        attachLog: true,
+                        body: "The Security Scan stage has successfully completed.",
+                        subject: "Security Scan",
+                        to: 'hesh.zsg@gmail.com'
+                    )
                 }
             }
         }
@@ -47,9 +53,12 @@ pipeline {
             }
             post {
                 success {
-                    mail to: 'hesh.zsg@gmail.com',
-                    subject: "Integration Tests on Staging",
-                    body: "The Integration Tests on Staging has successfully completed."
+                    emailext (
+                        attachLog: true,
+                        body: "The Integration Tests on Staging stage has successfully completed.",
+                        subject: "Integration Tests on Staging",
+                        to: 'hesh.zsg@gmail.com'
+                    )
                 }
             }
         }
