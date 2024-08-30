@@ -12,10 +12,16 @@ pipeline {
                 echo 'Run unit tests using a framework like JUnit or TestNG, and integration tests to ensure the different components work together.'
             }
             post {
-                success {
+                always {
+                    script {
+                        def logContent = currentBuild.rawBuild.getLog(100).join('\n')
+                        writeFile file: "unit-integration-tests-log.txt", text: logContent
+                    }
                     mail to: 'hesh.zsg@gmail.com',
-                    subject: "Unit and Integration Tests",
-                    body: "The Unit and Integration Tests stage has successfully completed."
+                    subject: "Unit and Integration Tests Stage: ${currentBuild.currentResult}",
+                    body: "The Unit and Integration Tests stage has ${currentBuild.currentResult.toLowerCase()}.\n\nSee the attached logs for more details.",
+                    attachLog: true,
+                    attachmentsPattern: 'unit-integration-tests-log.txt'
                 }
             }
         }
