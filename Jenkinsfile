@@ -15,7 +15,7 @@ pipeline {
                 sucess {
                     mail to: 'hesh.zsg@gmail.com',
                     subject: "Unit and Integration Tests",
-                    body: "The Unit and Integration Tests stage has successfully completed.",
+                    body: "The Unit and Integration Tests stage has successfully completed."
                 }
             }
         }
@@ -32,7 +32,7 @@ pipeline {
                 sucess {
                     mail to: 'hesh.zsg@gmail.com',
                     subject: "Security Scan",
-                    body: "The Security Scan stage has successfully completed.",
+                    body: "The Security Scan stage has successfully completed."
                 }
             }
         }
@@ -49,7 +49,7 @@ pipeline {
                 sucess {
                     mail to: 'hesh.zsg@gmail.com',
                     subject: "Integration Tests on Staging",
-                    body: "The Integration Tests on Staging has successfully completed.",
+                    body: "The Integration Tests on Staging has successfully completed."
                 }
             }
         }
