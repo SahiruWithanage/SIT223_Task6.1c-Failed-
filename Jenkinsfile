@@ -18,22 +18,18 @@ pipeline {
                 }
             }
             post {
-                success {
+                always {
                     script {
-                        def logFiles = findFiles(glob: '**/*.log')
-                        def logContent = logFiles.collect { readFile(it.path) }.join('\n\n')
-                        mail to: 'hesh.zsg@gmail.com',
-                             subject: "Unit and Integration Tests - ${currentBuild.result}",
-                             body: "The Unit and Integration Tests stage has ${currentBuild.result}. Here are the logs:\n\n${logContent}"
-                    }
-                }
-                failure {
-                    script {
-                        def logFiles = findFiles(glob: '**/*.log')
-                        def logContent = logFiles.collect { readFile(it.path) }.join('\n\n')
-                        mail to: 'hesh.zsg@gmail.com',
-                             subject: "Unit and Integration Tests - ${currentBuild.result}",
-                             body: "The Unit and Integration Tests stage has ${currentBuild.result}. Here are the logs:\n\n${logContent}"
+                        // Archive the log files so they can be attached
+                        archiveArtifacts artifacts: '**/*.log', allowEmptyArchive: true
+
+                        // Attach the logs to the email
+                        emailext(
+                            to: 'hesh.zsg@gmail.com',
+                            subject: "Unit and Integration Tests - ${currentBuild.currentResult}",
+                            body: "The Unit and Integration Tests stage has ${currentBuild.currentResult}. Please find the attached logs.",
+                            attachmentsPattern: '**/*.log'
+                        )
                     }
                 }
             }
@@ -54,22 +50,18 @@ pipeline {
                 }
             }
             post {
-                success {
+                always {
                     script {
-                        def logFiles = findFiles(glob: '**/*.log')
-                        def logContent = logFiles.collect { readFile(it.path) }.join('\n\n')
-                        mail to: 'hesh.zsg@gmail.com',
-                             subject: "Security Scan - ${currentBuild.result}",
-                             body: "The Security Scan stage has ${currentBuild.result}. Here are the logs:\n\n${logContent}"
-                    }
-                }
-                failure {
-                    script {
-                        def logFiles = findFiles(glob: '**/*.log')
-                        def logContent = logFiles.collect { readFile(it.path) }.join('\n\n')
-                        mail to: 'hesh.zsg@gmail.com',
-                             subject: "Security Scan - ${currentBuild.result}",
-                             body: "The Security Scan stage has ${currentBuild.result}. Here are the logs:\n\n${logContent}"
+                        // Archive the log files so they can be attached
+                        archiveArtifacts artifacts: '**/*.log', allowEmptyArchive: true
+
+                        // Attach the logs to the email
+                        emailext(
+                            to: 'hesh.zsg@gmail.com',
+                            subject: "Security Scan - ${currentBuild.currentResult}",
+                            body: "The Security Scan stage has ${currentBuild.currentResult}. Please find the attached logs.",
+                            attachmentsPattern: '**/*.log'
+                        )
                     }
                 }
             }
@@ -90,22 +82,18 @@ pipeline {
                 }
             }
             post {
-                success {
+                always {
                     script {
-                        def logFiles = findFiles(glob: '**/*.log')
-                        def logContent = logFiles.collect { readFile(it.path) }.join('\n\n')
-                        mail to: 'hesh.zsg@gmail.com',
-                             subject: "Integration Tests on Staging - ${currentBuild.result}",
-                             body: "The Integration Tests on Staging stage has ${currentBuild.result}. Here are the logs:\n\n${logContent}"
-                    }
-                }
-                failure {
-                    script {
-                        def logFiles = findFiles(glob: '**/*.log')
-                        def logContent = logFiles.collect { readFile(it.path) }.join('\n\n')
-                        mail to: 'hesh.zsg@gmail.com',
-                             subject: "Integration Tests on Staging - ${currentBuild.result}",
-                             body: "The Integration Tests on Staging stage has ${currentBuild.result}. Here are the logs:\n\n${logContent}"
+                        // Archive the log files so they can be attached
+                        archiveArtifacts artifacts: '**/*.log', allowEmptyArchive: true
+
+                        // Attach the logs to the email
+                        emailext(
+                            to: 'hesh.zsg@gmail.com',
+                            subject: "Integration Tests on Staging - ${currentBuild.currentResult}",
+                            body: "The Integration Tests on Staging stage has ${currentBuild.currentResult}. Please find the attached logs.",
+                            attachmentsPattern: '**/*.log'
+                        )
                     }
                 }
             }
