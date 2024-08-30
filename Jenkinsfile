@@ -12,7 +12,7 @@ lpipeline {
                 echo 'Run unit tests using a framework like JUnit or TestNG, and integration tests to ensure the different components work together.'
             }
             post {
-                success {
+                
                         emailext  
                         
                         
@@ -20,7 +20,7 @@ lpipeline {
                     body: "The Security Scan stage has successfully completed.",
                         subject: "Security Scan",
                     to: 'hesh.zsg@gmail.com'
-                }
+                
             }
         }
         stage('Code Analysis') {
