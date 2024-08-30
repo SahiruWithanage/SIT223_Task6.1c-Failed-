@@ -17,7 +17,7 @@ pipeline {
                         def logFiles = findFiles(glob: '**/*.log')
                         def attachments = logFiles.collect { it.path }.join(',')
                         mail to: 'hesh.zsg@gmail.com',
-                             subject: "Unit and Integration Tests - ${currentBuild.result}",
+                             subject: "Unit and Integration Tests - Successful!!",
                              body: "The Unit and Integration Tests stage has ${currentBuild.result}. Please find the attached logs.",
                              attachments: attachments
                     }
@@ -27,7 +27,7 @@ pipeline {
                         def logFiles = findFiles(glob: '**/*.log')
                         def attachments = logFiles.collect { it.path }.join(',')
                         mail to: 'hesh.zsg@gmail.com',
-                             subject: "Unit and Integration Tests - ${currentBuild.result}",
+                             subject: "Unit and Integration Tests - Failed",
                              body: "The Unit and Integration Tests stage has ${currentBuild.result}. Please find the attached logs.",
                              attachments: attachments
                     }
