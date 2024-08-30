@@ -14,24 +14,20 @@ pipeline {
             post {
                 success {
                     script {
-                        archiveArtifacts artifacts: '**/*.log', allowEmptyArchive: true
                         def logFiles = findFiles(glob: '**/*.log')
-                        def attachments = logFiles.collect { it.path }.join(',')
+                        def logContent = logFiles.collect { readFile(it.path) }.join('\n\n')
                         mail to: 'hesh.zsg@gmail.com',
                              subject: "Unit and Integration Tests - ${currentBuild.result}",
-                             body: "The Unit and Integration Tests stage has ${currentBuild.result}. Please find the attached logs.",
-                             attachments: attachments
+                             body: "The Unit and Integration Tests stage has ${currentBuild.result}. Here are the logs:\n\n${logContent}"
                     }
                 }
                 failure {
                     script {
-                        archiveArtifacts artifacts: '**/*.log', allowEmptyArchive: true
                         def logFiles = findFiles(glob: '**/*.log')
-                        def attachments = logFiles.collect { it.path }.join(',')
+                        def logContent = logFiles.collect { readFile(it.path) }.join('\n\n')
                         mail to: 'hesh.zsg@gmail.com',
                              subject: "Unit and Integration Tests - ${currentBuild.result}",
-                             body: "The Unit and Integration Tests stage has ${currentBuild.result}. Please find the attached logs.",
-                             attachments: attachments
+                             body: "The Unit and Integration Tests stage has ${currentBuild.result}. Here are the logs:\n\n${logContent}"
                     }
                 }
             }
